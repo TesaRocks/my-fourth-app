@@ -7,20 +7,7 @@ import { Subject } from 'rxjs';
 @Injectable()
 export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
-  private recipes: Recipe[] = [
-    new Recipe(
-      'Milanesa',
-      'la mejor',
-      'https://www.196flavors.com/wp-content/uploads/2018/12/milanesa-7-FP-500x500.jpg',
-      [new Ingredient('meat', 2), new Ingredient('avocado', 2)]
-    ),
-    new Recipe(
-      'Choripan',
-      'mm que rico',
-      'https://cdn.kiwilimon.com/recetaimagen/37191/46761.jpg',
-      [new Ingredient('chorizo', 1), new Ingredient('bread', 2)]
-    ),
-  ];
+  private recipes: Recipe[] = [];
   constructor(private shoppingService: ShoppingService) {}
 
   setRecipes(recipes: Recipe[]) {
