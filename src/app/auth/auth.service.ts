@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface AuthResponseData {
   idtoken: string;
@@ -7,15 +9,45 @@ export interface AuthResponseData {
   refreshToken: string;
   expiresin: string;
   localid: string;
+  registered?: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   constructor(private http: HttpClient) {}
   signup(email: string, password: string) {
-    return this.http.post<AuthResponseData>(
-      'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDRoHmViLfUhx-4JTKPvNRR0uemq2wCCpk',
-      { email: email, password: password, returnSecureToken: true }
-    );
+    return this.http
+      .post<AuthResponseData>(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDRoHmViLfUhx-4JTKPvNRR0uemq2wCCpk',
+        { email: email, password: password, returnSecureToken: true }
+      )
+      .pipe(catchError(this.handleError));
+  }
+  login(email: string, password: string) {
+    return this.http
+      .post<AuthResponseData>(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key= AIzaSyDRoHmViLfUhx-4JTKPvNRR0uemq2wCCpk',
+        { email: email, password: password, returnSecureToken: true }
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'an unknown error';
+    if (!errorRes.error || !errorRes.error.error) {
+      return throwError(errorMessage);
+    }
+    switch (errorRes.error.error.message) {
+      case 'EMAIL_EXISTS':
+        errorMessage = 'This email is in use';
+        break;
+      case 'EMAIL_NOT_FOUND':
+        errorMessage = 'not found email';
+        break;
+      case 'INVALID_PASSWORD':
+        errorMessage = 'invalid pass';
+        break;
+    }
+    return throwError(errorMessage);
   }
 }
