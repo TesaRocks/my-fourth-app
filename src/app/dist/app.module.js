@@ -12,39 +12,21 @@ var core_1 = require("@angular/core");
 var app_routing_module_1 = require("./app-routing.module");
 var app_component_1 = require("./app.component");
 var header_component_1 = require("./header/header.component");
-var forms_1 = require("@angular/forms");
-var shopping_service_1 = require("./shopping/shopping.service");
-var recipe_service_1 = require("./recipes/recipe.service");
 var http_1 = require("@angular/common/http");
-var auth_component_1 = require("./auth/auth.component");
-var auth_interceptor_service_1 = require("./auth/auth-interceptor.service");
-var recipes_module_1 = require("./recipes/recipes.module");
-var shopping_module_1 = require("./shopping/shopping.module");
 var shared_module_1 = require("./shared/shared.module");
+var core_module_1 = require("./core.module");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            declarations: [app_component_1.AppComponent, header_component_1.HeaderComponent, auth_component_1.AuthComponent],
+            declarations: [app_component_1.AppComponent, header_component_1.HeaderComponent],
             imports: [
                 platform_browser_1.BrowserModule,
                 app_routing_module_1.AppRoutingModule,
-                forms_1.FormsModule,
-                forms_1.ReactiveFormsModule,
                 http_1.HttpClientModule,
-                recipes_module_1.RecipesModule,
-                shopping_module_1.ShoppingModule,
                 shared_module_1.SharedModule,
-            ],
-            providers: [
-                shopping_service_1.ShoppingService,
-                recipe_service_1.RecipeService,
-                {
-                    provide: http_1.HTTP_INTERCEPTORS,
-                    useClass: auth_interceptor_service_1.AuthInterceptorService,
-                    multi: true
-                },
+                core_module_1.CoreModule,
             ],
             bootstrap: [app_component_1.AppComponent]
         })

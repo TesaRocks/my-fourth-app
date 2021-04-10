@@ -6,26 +6,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
-exports.ShoppingModule = void 0;
+exports.AuthModule = void 0;
+var common_1 = require("@angular/common");
 var core_1 = require("@angular/core");
-var shopping_component_1 = require("./shopping.component");
-var shopping_edit_component_1 = require("./shopping-edit/shopping-edit.component");
-var router_1 = require("@angular/router");
 var forms_1 = require("@angular/forms");
+var router_1 = require("@angular/router");
 var shared_module_1 = require("../shared/shared.module");
-var ShoppingModule = /** @class */ (function () {
-    function ShoppingModule() {
+var auth_component_1 = require("./auth.component");
+var AuthModule = /** @class */ (function () {
+    function AuthModule() {
     }
-    ShoppingModule = __decorate([
+    AuthModule = __decorate([
         core_1.NgModule({
-            declarations: [shopping_component_1.ShoppingComponent, shopping_edit_component_1.ShoppingEditComponent],
+            declarations: [auth_component_1.AuthComponent],
             imports: [
-                router_1.RouterModule.forChild([{ path: '', component: shopping_component_1.ShoppingComponent }]),
+                common_1.CommonModule,
                 forms_1.FormsModule,
                 shared_module_1.SharedModule,
+                router_1.RouterModule.forChild([{ path: '', component: auth_component_1.AuthComponent }]),
             ]
         })
-    ], ShoppingModule);
-    return ShoppingModule;
+    ], AuthModule);
+    return AuthModule;
 }());
-exports.ShoppingModule = ShoppingModule;
+exports.AuthModule = AuthModule;

@@ -9,10 +9,24 @@ exports.__esModule = true;
 exports.AppRoutingModule = void 0;
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var auth_component_1 = require("./auth/auth.component");
 var routes = [
     { path: '', redirectTo: '/recipes', pathMatch: 'full' },
-    { path: 'auth', component: auth_component_1.AuthComponent },
+    {
+        path: 'recipes',
+        loadChildren: function () {
+            return Promise.resolve().then(function () { return require('./recipes/recipes.module'); }).then(function (m) { return m.RecipesModule; });
+        }
+    },
+    {
+        path: 'shopping',
+        loadChildren: function () {
+            return Promise.resolve().then(function () { return require('./shopping/shopping.module'); }).then(function (m) { return m.ShoppingModule; });
+        }
+    },
+    {
+        path: 'auth',
+        loadChildren: function () { return Promise.resolve().then(function () { return require('./auth/auth.module'); }).then(function (m) { return m.AuthModule; }); }
+    },
 ];
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {

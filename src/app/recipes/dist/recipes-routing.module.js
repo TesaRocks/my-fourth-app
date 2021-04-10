@@ -17,7 +17,7 @@ var recipes_resolver_service_1 = require("./recipes-resolver.service");
 var recipes_component_1 = require("./recipes.component");
 var routes = [
     {
-        path: 'recipes',
+        path: '',
         component: recipes_component_1.RecipesComponent,
         canActivate: [auth_guard_1.AuthGuard],
         children: [
