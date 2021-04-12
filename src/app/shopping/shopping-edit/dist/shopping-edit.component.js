@@ -32,7 +32,11 @@ var ShoppingEditComponent = /** @class */ (function () {
         var value = form.value;
         var newIng = new ingredient_model_1.Ingredient(value.name, value.amount);
         if (this.editMode) {
-            this.shoppingService.updateIngredient(this.editedItemIndex, newIng);
+            //this.shoppingService.updateIngredient(this.editedItemIndex, newIng);
+            this.store.dispatch(new ShoppingActions.UpdateIngredient({
+                index: this.editedItemIndex,
+                ingredient: newIng
+            }));
         }
         else {
             //this.shoppingService.addIngredient(newIng);
@@ -46,7 +50,8 @@ var ShoppingEditComponent = /** @class */ (function () {
         this.slForm.reset();
     };
     ShoppingEditComponent.prototype.onDelete = function () {
-        this.shoppingService.deleteIngredient(this.editedItemIndex);
+        // this.shoppingService.deleteIngredient(this.editedItemIndex);
+        this.store.dispatch(new ShoppingActions.DeleteIngredient(this.editedItemIndex));
         this.onClear();
     };
     ShoppingEditComponent.prototype.ngOnDestroy = function () {

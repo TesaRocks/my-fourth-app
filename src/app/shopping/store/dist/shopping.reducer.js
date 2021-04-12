@@ -22,7 +22,9 @@ exports.shoppingReducer = void 0;
 var ingredient_model_1 = require("../../shared/ingredient.model");
 var ShoppingActions = require("./shopping.actions");
 var initialState = {
-    ingredients: [new ingredient_model_1.Ingredient('apples', 10), new ingredient_model_1.Ingredient('banana', 2)]
+    ingredients: [new ingredient_model_1.Ingredient('apples', 10), new ingredient_model_1.Ingredient('banana', 2)],
+    editedIngredient: null,
+    editedIngredientIndex: -1
 };
 function shoppingReducer(state, action) {
     if (state === void 0) { state = initialState; }
@@ -31,6 +33,16 @@ function shoppingReducer(state, action) {
             return __assign(__assign({}, state), { ingredients: __spreadArrays(state.ingredients, [action.payload]) });
         case ShoppingActions.ADD_INGREDIENTS:
             return __assign(__assign({}, state), { ingredients: __spreadArrays(state.ingredients, action.payload) });
+        case ShoppingActions.UPDATE_INGREDIENT:
+            var ingredient = state.ingredients[action.payload.index];
+            var updatedIngredient = __assign(__assign({}, ingredient), action.payload.ingredient);
+            var updatedIngredients = __spreadArrays(state.ingredients);
+            updatedIngredients[action.payload.index] = updatedIngredient;
+            return __assign(__assign({}, state), { ingredients: updatedIngredients });
+        case ShoppingActions.DELETE_INGREDIENT:
+            return __assign(__assign({}, state), { ingredients: state.ingredients.filter(function (ing, igIndex) {
+                    return igIndex != action.payload;
+                }) });
         default:
             return state;
     }
