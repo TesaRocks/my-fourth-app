@@ -4,7 +4,7 @@ import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingService } from './shopping.service';
 import { Store } from '@ngrx/store';
 import * as fromShopping from './store/shopping.reducer';
-
+import * as ShoppingActions from './store/shopping.actions';
 @Component({
   selector: 'app-shopping',
   templateUrl: './shopping.component.html',
@@ -28,7 +28,8 @@ export class ShoppingComponent implements OnInit, OnDestroy {
     // );
   }
   onEdit(id: number) {
-    this.shoppingService.startedEditing.next(id);
+    // this.shoppingService.startedEditing.next(id);
+    this.store.dispatch(new ShoppingActions.StartEdit(id));
   }
   ngOnDestroy() {
     //    this.ingChangeSub.unsubscribe();

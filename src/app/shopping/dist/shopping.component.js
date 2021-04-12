@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 exports.ShoppingComponent = void 0;
 var core_1 = require("@angular/core");
+var ShoppingActions = require("./store/shopping.actions");
 var ShoppingComponent = /** @class */ (function () {
     function ShoppingComponent(shoppingService, store) {
         this.shoppingService = shoppingService;
@@ -23,7 +24,8 @@ var ShoppingComponent = /** @class */ (function () {
         // );
     };
     ShoppingComponent.prototype.onEdit = function (id) {
-        this.shoppingService.startedEditing.next(id);
+        // this.shoppingService.startedEditing.next(id);
+        this.store.dispatch(new ShoppingActions.StartEdit(id));
     };
     ShoppingComponent.prototype.ngOnDestroy = function () {
         //    this.ingChangeSub.unsubscribe();

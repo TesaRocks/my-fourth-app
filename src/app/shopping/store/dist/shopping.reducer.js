@@ -34,15 +34,19 @@ function shoppingReducer(state, action) {
         case ShoppingActions.ADD_INGREDIENTS:
             return __assign(__assign({}, state), { ingredients: __spreadArrays(state.ingredients, action.payload) });
         case ShoppingActions.UPDATE_INGREDIENT:
-            var ingredient = state.ingredients[action.payload.index];
-            var updatedIngredient = __assign(__assign({}, ingredient), action.payload.ingredient);
+            var ingredient = state.ingredients[state.editedIngredientIndex];
+            var updatedIngredient = __assign(__assign(__assign({}, ingredient), action.payload), { editedIngredientIndex: -1, editedIngredient: null });
             var updatedIngredients = __spreadArrays(state.ingredients);
-            updatedIngredients[action.payload.index] = updatedIngredient;
+            updatedIngredients[state.editedIngredientIndex] = updatedIngredient;
             return __assign(__assign({}, state), { ingredients: updatedIngredients });
         case ShoppingActions.DELETE_INGREDIENT:
             return __assign(__assign({}, state), { ingredients: state.ingredients.filter(function (ing, igIndex) {
-                    return igIndex != action.payload;
-                }) });
+                    return igIndex != state.editedIngredientIndex;
+                }), editedIngredientIndex: -1, editedIngredient: null });
+        case ShoppingActions.START_EDIT:
+            return __assign(__assign({}, state), { editedIngredientIndex: action.payload, editedIngredient: __assign({}, state.ingredients[action.payload]) });
+        case ShoppingActions.STOP_EDIT:
+            return __assign(__assign({}, state), { editedIngredient: null, editedIngredientIndex: -1 });
         default:
             return state;
     }
