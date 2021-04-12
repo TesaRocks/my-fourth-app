@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingService } from '../shopping/shopping.service';
+//import { ShoppingService } from '../shopping/shopping.service';
 import { Recipe } from './recipe.model';
 import { Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -12,7 +12,7 @@ export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
   private recipes: Recipe[] = [];
   constructor(
-    private shoppingService: ShoppingService,
+    //  private shoppingService: ShoppingService,
     private store: Store<fromShopping.AppState>
   ) {}
 

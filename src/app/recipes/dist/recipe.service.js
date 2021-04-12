@@ -11,8 +11,9 @@ var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
 var Shoppingactions = require("../shopping/store/shopping.actions");
 var RecipeService = /** @class */ (function () {
-    function RecipeService(shoppingService, store) {
-        this.shoppingService = shoppingService;
+    function RecipeService(
+    //  private shoppingService: ShoppingService,
+    store) {
         this.store = store;
         this.recipesChanged = new rxjs_1.Subject();
         this.recipes = [];

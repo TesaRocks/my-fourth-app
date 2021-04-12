@@ -11,8 +11,9 @@ var core_1 = require("@angular/core");
 var ingredient_model_1 = require("src/app/shared/ingredient.model");
 var ShoppingActions = require("../store/shopping.actions");
 var ShoppingEditComponent = /** @class */ (function () {
-    function ShoppingEditComponent(shoppingService, store) {
-        this.shoppingService = shoppingService;
+    function ShoppingEditComponent(
+    //  private shoppingService: ShoppingService,
+    store) {
         this.store = store;
         this.editMode = false;
     }

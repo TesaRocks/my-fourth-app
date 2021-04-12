@@ -10,8 +10,9 @@ exports.ShoppingComponent = void 0;
 var core_1 = require("@angular/core");
 var ShoppingActions = require("./store/shopping.actions");
 var ShoppingComponent = /** @class */ (function () {
-    function ShoppingComponent(shoppingService, store) {
-        this.shoppingService = shoppingService;
+    function ShoppingComponent(
+    //private shoppingService: ShoppingService,
+    store) {
         this.store = store;
     }
     ShoppingComponent.prototype.ngOnInit = function () {

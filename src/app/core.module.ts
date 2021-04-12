@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
-import { ShoppingService } from './shopping/shopping.service';
+//import { ShoppingService } from './shopping/shopping.service';
 import { RecipeService } from './recipes/recipe.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 @NgModule({
   providers: [
-    ShoppingService,
+    //  ShoppingService,
     RecipeService,
     {
       provide: HTTP_INTERCEPTORS,
