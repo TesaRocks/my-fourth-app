@@ -16,7 +16,7 @@ var http_1 = require("@angular/common/http");
 var shared_module_1 = require("./shared/shared.module");
 var core_module_1 = require("./core.module");
 var store_1 = require("@ngrx/store");
-var shopping_reducer_1 = require("./shopping/store/shopping.reducer");
+var fromApp = require("./store/app.reducer");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -27,7 +27,7 @@ var AppModule = /** @class */ (function () {
                 platform_browser_1.BrowserModule,
                 app_routing_module_1.AppRoutingModule,
                 http_1.HttpClientModule,
-                store_1.StoreModule.forRoot({ shopping: shopping_reducer_1.shoppingReducer }),
+                store_1.StoreModule.forRoot(fromApp.appReducer),
                 shared_module_1.SharedModule,
                 core_module_1.CoreModule,
             ],

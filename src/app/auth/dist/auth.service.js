@@ -12,11 +12,12 @@ var rxjs_1 = require("rxjs");
 var operators_1 = require("rxjs/operators");
 var user_model_1 = require("./user.model");
 var environment_1 = require("../../environments/environment");
+var AuthActions = require("./store/auth.actions");
 var AuthService = /** @class */ (function () {
-    function AuthService(http, router) {
+    function AuthService(http, router, store) {
         this.http = http;
         this.router = router;
-        this.user = new rxjs_1.BehaviorSubject(null);
+        this.store = store;
     }
     AuthService.prototype.signup = function (email, password) {
         var _this = this;
@@ -43,14 +44,21 @@ var AuthService = /** @class */ (function () {
         }
         var loadedUser = new user_model_1.User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
         if (loadedUser.token) {
-            this.user.next(loadedUser);
+            //this.user.next(loadedUser);
+            this.store.dispatch(new AuthActions.Login({
+                email: loadedUser.email,
+                userId: loadedUser.id,
+                token: loadedUser.token,
+                expirationDate: new Date(userData._tokenExpirationDate)
+            }));
             var expirationDuration = new Date(userData._tokenExpirationDate).getTime() -
                 new Date().getTime();
             this.autoLogout(expirationDuration);
         }
     };
     AuthService.prototype.logout = function () {
-        this.user.next(null);
+        //this.user.next(null);
+        this.store.dispatch(new AuthActions.Logout());
         this.router.navigate(['/auth']);
         localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
@@ -67,7 +75,13 @@ var AuthService = /** @class */ (function () {
     AuthService.prototype.handleAuthentication = function (email, userId, token, expiresin) {
         var expirationDate = new Date(new Date().getTime() + expiresin * 1000);
         var user = new user_model_1.User(email, userId, token, expirationDate);
-        this.user.next(user);
+        //this.user.next(user);
+        this.store.dispatch(new AuthActions.Login({
+            email: email,
+            userId: userId,
+            token: token,
+            expirationDate: expirationDate
+        }));
         this.autoLogout(expiresin * 1000);
         localStorage.setItem('userData', JSON.stringify(user));
     };

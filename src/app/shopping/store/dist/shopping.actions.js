@@ -1,12 +1,12 @@
 "use strict";
 exports.__esModule = true;
 exports.StopEdit = exports.StartEdit = exports.DeleteIngredient = exports.UpdateIngredient = exports.Addingredients = exports.AddIngredient = exports.STOP_EDIT = exports.START_EDIT = exports.DELETE_INGREDIENT = exports.UPDATE_INGREDIENT = exports.ADD_INGREDIENTS = exports.ADD_INGREDIENT = void 0;
-exports.ADD_INGREDIENT = 'ADD_INGREDIENT';
-exports.ADD_INGREDIENTS = 'ADD_INGEDIENTS';
-exports.UPDATE_INGREDIENT = 'UPDATE_INGREDIENT';
-exports.DELETE_INGREDIENT = 'DELETE_INGREDIENT';
-exports.START_EDIT = 'START-EDIT';
-exports.STOP_EDIT = 'STOP_EDIT';
+exports.ADD_INGREDIENT = '[Shopping] Add Ingredient';
+exports.ADD_INGREDIENTS = '[Shopping] Add Ingredients';
+exports.UPDATE_INGREDIENT = '[Shopping] Update Ingredients';
+exports.DELETE_INGREDIENT = '[Shopping] Delete Ingredients';
+exports.START_EDIT = '[Shopping] Start Edit';
+exports.STOP_EDIT = '[Shopping] Stop Edit';
 var AddIngredient = /** @class */ (function () {
     function AddIngredient(payload) {
         this.payload = payload;
