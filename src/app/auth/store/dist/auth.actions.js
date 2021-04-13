@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
-exports.Logout = exports.Login = exports.LOGOUT = exports.LOGIN = void 0;
+exports.LoginStart = exports.Logout = exports.Login = exports.LOGOUT = exports.LOGIN = exports.LOGIN_START = void 0;
+exports.LOGIN_START = '[Auth] Login Start';
 exports.LOGIN = '[Auth] Login';
 exports.LOGOUT = '[Auth] Logout';
 var Login = /** @class */ (function () {
@@ -18,3 +19,11 @@ var Logout = /** @class */ (function () {
     return Logout;
 }());
 exports.Logout = Logout;
+var LoginStart = /** @class */ (function () {
+    function LoginStart(payload) {
+        this.payload = payload;
+        this.type = exports.LOGIN_START;
+    }
+    return LoginStart;
+}());
+exports.LoginStart = LoginStart;
