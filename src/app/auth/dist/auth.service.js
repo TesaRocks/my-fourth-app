@@ -45,7 +45,7 @@ var AuthService = /** @class */ (function () {
         var loadedUser = new user_model_1.User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
         if (loadedUser.token) {
             //this.user.next(loadedUser);
-            this.store.dispatch(new AuthActions.Login({
+            this.store.dispatch(new AuthActions.AuthenticateSuccess({
                 email: loadedUser.email,
                 userId: loadedUser.id,
                 token: loadedUser.token,
@@ -76,7 +76,7 @@ var AuthService = /** @class */ (function () {
         var expirationDate = new Date(new Date().getTime() + expiresin * 1000);
         var user = new user_model_1.User(email, userId, token, expirationDate);
         //this.user.next(user);
-        this.store.dispatch(new AuthActions.Login({
+        this.store.dispatch(new AuthActions.AuthenticateSuccess({
             email: email,
             userId: userId,
             token: token,

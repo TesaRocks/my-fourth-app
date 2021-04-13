@@ -17,6 +17,8 @@ var shared_module_1 = require("./shared/shared.module");
 var core_module_1 = require("./core.module");
 var store_1 = require("@ngrx/store");
 var fromApp = require("./store/app.reducer");
+var effects_1 = require("@ngrx/effects");
+var auth_effects_1 = require("./auth/store/auth.effects");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -28,6 +30,7 @@ var AppModule = /** @class */ (function () {
                 app_routing_module_1.AppRoutingModule,
                 http_1.HttpClientModule,
                 store_1.StoreModule.forRoot(fromApp.appReducer),
+                effects_1.EffectsModule.forRoot([auth_effects_1.AuthEffects]),
                 shared_module_1.SharedModule,
                 core_module_1.CoreModule,
             ],

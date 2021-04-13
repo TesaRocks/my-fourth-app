@@ -1,17 +1,19 @@
 "use strict";
 exports.__esModule = true;
-exports.LoginStart = exports.Logout = exports.Login = exports.LOGOUT = exports.LOGIN = exports.LOGIN_START = void 0;
+exports.SignupStart = exports.AuthenticateFail = exports.LoginStart = exports.Logout = exports.AuthenticateSuccess = exports.LOGOUT = exports.SIGNUP_START = exports.AUTHENTICATE_FAIL = exports.AUTHENTICATE_SUCCESS = exports.LOGIN_START = void 0;
 exports.LOGIN_START = '[Auth] Login Start';
-exports.LOGIN = '[Auth] Login';
+exports.AUTHENTICATE_SUCCESS = '[Auth] Login';
+exports.AUTHENTICATE_FAIL = '[Auth] Login Fail';
+exports.SIGNUP_START = '[Auth] Signup Start';
 exports.LOGOUT = '[Auth] Logout';
-var Login = /** @class */ (function () {
-    function Login(payload) {
+var AuthenticateSuccess = /** @class */ (function () {
+    function AuthenticateSuccess(payload) {
         this.payload = payload;
-        this.type = exports.LOGIN;
+        this.type = exports.AUTHENTICATE_SUCCESS;
     }
-    return Login;
+    return AuthenticateSuccess;
 }());
-exports.Login = Login;
+exports.AuthenticateSuccess = AuthenticateSuccess;
 var Logout = /** @class */ (function () {
     function Logout() {
         this.type = exports.LOGOUT;
@@ -27,3 +29,19 @@ var LoginStart = /** @class */ (function () {
     return LoginStart;
 }());
 exports.LoginStart = LoginStart;
+var AuthenticateFail = /** @class */ (function () {
+    function AuthenticateFail(payload) {
+        this.payload = payload;
+        this.type = exports.AUTHENTICATE_FAIL;
+    }
+    return AuthenticateFail;
+}());
+exports.AuthenticateFail = AuthenticateFail;
+var SignupStart = /** @class */ (function () {
+    function SignupStart(payload) {
+        this.payload = payload;
+        this.type = exports.SIGNUP_START;
+    }
+    return SignupStart;
+}());
+exports.SignupStart = SignupStart;
