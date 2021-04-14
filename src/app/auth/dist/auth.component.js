@@ -10,9 +10,10 @@ exports.AuthComponent = void 0;
 var core_1 = require("@angular/core");
 var AuthActions = require("./store/auth.actions");
 var AuthComponent = /** @class */ (function () {
-    function AuthComponent(authService, router, store) {
-        this.authService = authService;
-        this.router = router;
+    function AuthComponent(
+    // private authService: AuthService,
+    // private router: Router,
+    store) {
         this.store = store;
         this.isLoginMode = true;
         this.isLoading = false;

@@ -44,11 +44,12 @@ var handleError = function (errorRes) {
     return rxjs_1.of(new AuthActions.AuthenticateFail(errorMessage));
 };
 var AuthEffects = /** @class */ (function () {
-    function AuthEffects(actions$, http, router) {
+    function AuthEffects(actions$, http, router, authService) {
         var _this = this;
         this.actions$ = actions$;
         this.http = http;
         this.router = router;
+        this.authService = authService;
         this.authSignup = this.actions$.pipe(effects_1.ofType(AuthActions.SIGNUP_START), operators_1.switchMap(function (signupAction) {
             return _this.http
                 .post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
@@ -57,7 +58,9 @@ var AuthEffects = /** @class */ (function () {
                 password: signupAction.payload.password,
                 returnSecureToken: true
             })
-                .pipe(operators_1.map(function (resData) {
+                .pipe(operators_1.tap(function (resData) {
+                _this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+            }), operators_1.map(function (resData) {
                 return handleAuthentication(+resData.expiresIn, resData.email, resData.localId, resData.idToken);
             }), operators_1.catchError(function (errorRes) {
                 return handleError(errorRes);
@@ -71,13 +74,15 @@ var AuthEffects = /** @class */ (function () {
                 password: authData.payload.password,
                 returnSecureToken: true
             })
-                .pipe(operators_1.map(function (resData) {
+                .pipe(operators_1.tap(function (resData) {
+                _this.authService.setLogoutTimer(+resData.expiresIn * 1000);
+            }), operators_1.map(function (resData) {
                 return handleAuthentication(+resData.expiresIn, resData.email, resData.localId, resData.idToken);
             }), operators_1.catchError(function (errorRes) {
                 return handleError(errorRes);
             }));
         }));
-        this.authRedirect = this.actions$.pipe(effects_1.ofType(AuthActions.AUTHENTICATE_SUCCESS, AuthActions.LOGOUT), operators_1.tap(function () {
+        this.authRedirect = this.actions$.pipe(effects_1.ofType(AuthActions.AUTHENTICATE_SUCCESS), operators_1.tap(function () {
             _this.router.navigate(['/']);
         }));
         this.autoLogin = this.actions$.pipe(effects_1.ofType(AuthActions.AUTO_LOGIN), operators_1.map(function () {
@@ -88,6 +93,9 @@ var AuthEffects = /** @class */ (function () {
             var loadedUser = new user_model_1.User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
             if (loadedUser.token) {
                 //this.user.next(loadedUser);
+                var expirationDuration = new Date(userData._tokenExpirationDate).getTime() -
+                    new Date().getTime();
+                _this.authService.setLogoutTimer(expirationDuration);
                 return new AuthActions.AuthenticateSuccess({
                     email: loadedUser.email,
                     userId: loadedUser.id,
@@ -102,7 +110,9 @@ var AuthEffects = /** @class */ (function () {
             return { type: 'DUMMY' };
         }));
         this.authLogout = this.actions$.pipe(effects_1.ofType(AuthActions.LOGOUT), operators_1.tap(function () {
+            _this.authService.clearLogoutTimer();
             localStorage.removeItem('userData');
+            _this.router.navigate(['/auth']);
         }));
     }
     __decorate([
