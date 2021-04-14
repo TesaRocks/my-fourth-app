@@ -19,6 +19,9 @@ var store_1 = require("@ngrx/store");
 var fromApp = require("./store/app.reducer");
 var effects_1 = require("@ngrx/effects");
 var auth_effects_1 = require("./auth/store/auth.effects");
+var store_devtools_1 = require("@ngrx/store-devtools");
+var environment_1 = require("../environments/environment");
+var router_store_1 = require("@ngrx/router-store");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -33,6 +36,8 @@ var AppModule = /** @class */ (function () {
                 effects_1.EffectsModule.forRoot([auth_effects_1.AuthEffects]),
                 shared_module_1.SharedModule,
                 core_module_1.CoreModule,
+                store_devtools_1.StoreDevtoolsModule.instrument({ logOnly: environment_1.environment.production }),
+                router_store_1.StoreRouterConnectingModule.forRoot(),
             ],
             bootstrap: [app_component_1.AppComponent]
         })
