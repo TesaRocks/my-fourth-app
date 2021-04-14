@@ -10,6 +10,7 @@ exports.RecipeEditComponent = void 0;
 var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var operators_1 = require("rxjs/operators");
+var RecipesActions = require("../store/recipe.actions");
 var RecipeEditComponent = /** @class */ (function () {
     function RecipeEditComponent(route, recipeService, router, store) {
         this.route = route;
@@ -37,7 +38,7 @@ var RecipeEditComponent = /** @class */ (function () {
         var recipeIngredients = new forms_1.FormArray([]);
         if (this.editMode) {
             //const recipe = this.recipeService.getRecipe(this.id);
-            this.store
+            this.storeSub = this.store
                 .select('recipes')
                 .pipe(operators_1.map(function (recipeState) {
                 return recipeState.recipes.find(function (rec, index) {
@@ -93,15 +94,25 @@ var RecipeEditComponent = /** @class */ (function () {
         //   this.recipeForm.value['ingredients']
         // );
         if (this.editMode) {
-            this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+            //this.recipeService.updateRecipe(this.id, this.recipeForm.value);
+            this.store.dispatch(new RecipesActions.UpdateRecipe({
+                index: this.id,
+                newRecipe: this.recipeForm.value
+            }));
         }
         else {
-            this.recipeService.addRecipe(this.recipeForm.value);
+            // this.recipeService.addRecipe(this.recipeForm.value);
+            this.store.dispatch(new RecipesActions.AddRecipe(this.recipeForm.value));
         }
         this.onCancel();
     };
     RecipeEditComponent.prototype.onDeleteIng = function (index) {
         this.recipeForm.get('ingredients').removeAt(index);
+    };
+    RecipeEditComponent.prototype.ngOnDestroy = function () {
+        if (this.storeSub) {
+            this.storeSub.unsubscribe();
+        }
     };
     RecipeEditComponent = __decorate([
         core_1.Component({

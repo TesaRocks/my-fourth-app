@@ -28,6 +28,17 @@ function recipeReducer(state, action) {
     switch (action.type) {
         case RecipesActions.SET_RECIPES:
             return __assign(__assign({}, state), { recipes: __spreadArrays(action.payload) });
+        case RecipesActions.ADD_RECIPE:
+            return __assign(__assign({}, state), { recipes: __spreadArrays(state.recipes, [action.payload]) });
+        case RecipesActions.UPDATE_RECIPE:
+            var updatedRecipe = __assign(__assign({}, state.recipes[action.payload.index]), action.payload.newRecipe);
+            var updatedRecipes = __spreadArrays(state.recipes);
+            updatedRecipes[action.payload.index] = updatedRecipe;
+            return __assign(__assign({}, state), { recipes: updatedRecipes });
+        case RecipesActions.DELETE_RECIPE:
+            return __assign(__assign({}, state), { recipes: state.recipes.filter(function (rec, index) {
+                    return index != action.payload;
+                }) });
         default:
             return state;
     }

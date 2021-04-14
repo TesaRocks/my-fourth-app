@@ -10,10 +10,12 @@ exports.HeaderComponent = void 0;
 var core_1 = require("@angular/core");
 var operators_1 = require("rxjs/operators");
 var AuthActions = require("../auth/store/auth.actions");
+var RecipesActions = require("../recipes/store/recipe.actions");
 var HeaderComponent = /** @class */ (function () {
-    function HeaderComponent(dataStorageService, authService, store) {
-        this.dataStorageService = dataStorageService;
-        this.authService = authService;
+    function HeaderComponent(
+    //private dataStorageService: DataStorageService,
+    //private authService: AuthService,
+    store) {
         this.store = store;
         this.isAuthenticated = false;
     }
@@ -28,10 +30,12 @@ var HeaderComponent = /** @class */ (function () {
         });
     };
     HeaderComponent.prototype.onSave = function () {
-        this.dataStorageService.storeRecipes();
+        //this.dataStorageService.storeRecipes();
+        this.store.dispatch(new RecipesActions.StoreRecipes());
     };
     HeaderComponent.prototype.onFetch = function () {
-        this.dataStorageService.fetchRecipes().subscribe();
+        //this.dataStorageService.fetchRecipes().subscribe();
+        this.store.dispatch(new RecipesActions.FetchRecipes());
     };
     HeaderComponent.prototype.onLogout = function () {
         //this.authService.logout();

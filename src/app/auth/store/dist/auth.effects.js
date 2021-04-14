@@ -22,7 +22,8 @@ var handleAuthentication = function (expiresIn, email, userId, token) {
         email: email,
         userId: userId,
         token: token,
-        expirationDate: expirationDate
+        expirationDate: expirationDate,
+        redirect: true
     });
 };
 var handleError = function (errorRes) {
@@ -82,8 +83,10 @@ var AuthEffects = /** @class */ (function () {
                 return handleError(errorRes);
             }));
         }));
-        this.authRedirect = this.actions$.pipe(effects_1.ofType(AuthActions.AUTHENTICATE_SUCCESS), operators_1.tap(function () {
-            _this.router.navigate(['/']);
+        this.authRedirect = this.actions$.pipe(effects_1.ofType(AuthActions.AUTHENTICATE_SUCCESS), operators_1.tap(function (authSuccessAction) {
+            if (authSuccessAction.payload.redirect) {
+                _this.router.navigate(['/']);
+            }
         }));
         this.autoLogin = this.actions$.pipe(effects_1.ofType(AuthActions.AUTO_LOGIN), operators_1.map(function () {
             var userData = JSON.parse(localStorage.getItem('userData'));
@@ -100,7 +103,8 @@ var AuthEffects = /** @class */ (function () {
                     email: loadedUser.email,
                     userId: loadedUser.id,
                     token: loadedUser.token,
-                    expirationDate: new Date(userData._tokenExpirationDate)
+                    expirationDate: new Date(userData._tokenExpirationDate),
+                    redirect: false
                 });
                 // const expirationDuration =
                 //   new Date(userData._tokenExpirationDate).getTime() -

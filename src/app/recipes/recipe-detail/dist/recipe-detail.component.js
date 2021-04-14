@@ -9,6 +9,7 @@ exports.__esModule = true;
 exports.RecipeDetailComponent = void 0;
 var core_1 = require("@angular/core");
 var operators_1 = require("rxjs/operators");
+var RecipeActions = require("../store/recipe.actions");
 var RecipeDetailComponent = /** @class */ (function () {
     function RecipeDetailComponent(recipeService, route, router, store) {
         this.recipeService = recipeService;
@@ -41,7 +42,8 @@ var RecipeDetailComponent = /** @class */ (function () {
         //this.router.navigate(['../', this.id, 'edit'], { relativeTo: this.route });
     };
     RecipeDetailComponent.prototype.onDelete = function () {
-        this.recipeService.deleteRecipe(this.id);
+        //this.recipeService.deleteRecipe(this.id);
+        this.store.dispatch(new RecipeActions.DeleteRecipe(this.id));
         this.router.navigate(['/recipes']);
     };
     RecipeDetailComponent = __decorate([
