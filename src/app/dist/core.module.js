@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 exports.CoreModule = void 0;
 var core_1 = require("@angular/core");
-//import { ShoppingService } from './shopping/shopping.service';
+var shopping_service_1 = require("./shopping/shopping.service");
 var recipe_service_1 = require("./recipes/recipe.service");
 var auth_interceptor_service_1 = require("./auth/auth-interceptor.service");
 var http_1 = require("@angular/common/http");
@@ -18,7 +18,7 @@ var CoreModule = /** @class */ (function () {
     CoreModule = __decorate([
         core_1.NgModule({
             providers: [
-                //  ShoppingService,
+                shopping_service_1.ShoppingService,
                 recipe_service_1.RecipeService,
                 {
                     provide: http_1.HTTP_INTERCEPTORS,

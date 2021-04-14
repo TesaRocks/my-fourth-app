@@ -10,6 +10,7 @@ exports.RecipeDetailComponent = void 0;
 var core_1 = require("@angular/core");
 var operators_1 = require("rxjs/operators");
 var RecipeActions = require("../store/recipe.actions");
+var ShoppingActions = require("../../shopping/store/shopping.actions");
 var RecipeDetailComponent = /** @class */ (function () {
     function RecipeDetailComponent(recipeService, route, router, store) {
         this.recipeService = recipeService;
@@ -35,7 +36,8 @@ var RecipeDetailComponent = /** @class */ (function () {
         });
     };
     RecipeDetailComponent.prototype.toShop = function () {
-        this.recipeService.addIngToShopping(this.recipe.ingredients);
+        // this.recipeService.addIngToShopping(this.recipe.ingredients);
+        this.store.dispatch(new ShoppingActions.Addingredients(this.recipe.ingredients));
     };
     RecipeDetailComponent.prototype.onEdit = function () {
         this.router.navigate(['edit'], { relativeTo: this.route });

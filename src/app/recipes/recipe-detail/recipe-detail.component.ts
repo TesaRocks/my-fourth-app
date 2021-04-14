@@ -6,6 +6,8 @@ import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import * as fromApp from '../../store/app.reducer';
 import * as RecipeActions from '../store/recipe.actions';
+import * as ShoppingActions from '../../shopping/store/shopping.actions';
+
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
@@ -42,7 +44,10 @@ export class RecipeDetailComponent implements OnInit {
       });
   }
   toShop() {
-    this.recipeService.addIngToShopping(this.recipe.ingredients);
+    // this.recipeService.addIngToShopping(this.recipe.ingredients);
+    this.store.dispatch(
+      new ShoppingActions.Addingredients(this.recipe.ingredients)
+    );
   }
   onEdit() {
     this.router.navigate(['edit'], { relativeTo: this.route });
