@@ -1,10 +1,11 @@
 "use strict";
 exports.__esModule = true;
-exports.SignupStart = exports.AuthenticateFail = exports.LoginStart = exports.Logout = exports.AuthenticateSuccess = exports.LOGOUT = exports.SIGNUP_START = exports.AUTHENTICATE_FAIL = exports.AUTHENTICATE_SUCCESS = exports.LOGIN_START = void 0;
+exports.AutoLogin = exports.SignupStart = exports.AuthenticateFail = exports.LoginStart = exports.Logout = exports.AuthenticateSuccess = exports.LOGOUT = exports.AUTO_LOGIN = exports.SIGNUP_START = exports.AUTHENTICATE_FAIL = exports.AUTHENTICATE_SUCCESS = exports.LOGIN_START = void 0;
 exports.LOGIN_START = '[Auth] Login Start';
 exports.AUTHENTICATE_SUCCESS = '[Auth] Login';
 exports.AUTHENTICATE_FAIL = '[Auth] Login Fail';
 exports.SIGNUP_START = '[Auth] Signup Start';
+exports.AUTO_LOGIN = '[Auth] Auto Login';
 exports.LOGOUT = '[Auth] Logout';
 var AuthenticateSuccess = /** @class */ (function () {
     function AuthenticateSuccess(payload) {
@@ -45,3 +46,10 @@ var SignupStart = /** @class */ (function () {
     return SignupStart;
 }());
 exports.SignupStart = SignupStart;
+var AutoLogin = /** @class */ (function () {
+    function AutoLogin() {
+        this.type = exports.AUTO_LOGIN;
+    }
+    return AutoLogin;
+}());
+exports.AutoLogin = AutoLogin;

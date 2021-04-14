@@ -13,8 +13,11 @@ var operators_1 = require("rxjs/operators");
 var rxjs_1 = require("rxjs");
 var environment_1 = require("../../../environments/environment");
 var AuthActions = require("./auth.actions");
+var user_model_1 = require("../user.model");
 var handleAuthentication = function (expiresIn, email, userId, token) {
     var expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
+    var user = new user_model_1.User(email, userId, token, expirationDate);
+    localStorage.setItem('userData', JSON.stringify(user));
     return new AuthActions.AuthenticateSuccess({
         email: email,
         userId: userId,
@@ -74,8 +77,32 @@ var AuthEffects = /** @class */ (function () {
                 return handleError(errorRes);
             }));
         }));
-        this.authSuccess = this.actions$.pipe(effects_1.ofType(AuthActions.AUTHENTICATE_SUCCESS), operators_1.tap(function () {
+        this.authRedirect = this.actions$.pipe(effects_1.ofType(AuthActions.AUTHENTICATE_SUCCESS, AuthActions.LOGOUT), operators_1.tap(function () {
             _this.router.navigate(['/']);
+        }));
+        this.autoLogin = this.actions$.pipe(effects_1.ofType(AuthActions.AUTO_LOGIN), operators_1.map(function () {
+            var userData = JSON.parse(localStorage.getItem('userData'));
+            if (!userData) {
+                return { type: 'DUMMY' };
+            }
+            var loadedUser = new user_model_1.User(userData.email, userData.id, userData._token, new Date(userData._tokenExpirationDate));
+            if (loadedUser.token) {
+                //this.user.next(loadedUser);
+                return new AuthActions.AuthenticateSuccess({
+                    email: loadedUser.email,
+                    userId: loadedUser.id,
+                    token: loadedUser.token,
+                    expirationDate: new Date(userData._tokenExpirationDate)
+                });
+                // const expirationDuration =
+                //   new Date(userData._tokenExpirationDate).getTime() -
+                //   new Date().getTime();
+                // this.autoLogout(expirationDuration);
+            }
+            return { type: 'DUMMY' };
+        }));
+        this.authLogout = this.actions$.pipe(effects_1.ofType(AuthActions.LOGOUT), operators_1.tap(function () {
+            localStorage.removeItem('userData');
         }));
     }
     __decorate([
@@ -86,7 +113,13 @@ var AuthEffects = /** @class */ (function () {
     ], AuthEffects.prototype, "authLogin");
     __decorate([
         effects_1.Effect({ dispatch: false })
-    ], AuthEffects.prototype, "authSuccess");
+    ], AuthEffects.prototype, "authRedirect");
+    __decorate([
+        effects_1.Effect()
+    ], AuthEffects.prototype, "autoLogin");
+    __decorate([
+        effects_1.Effect({ dispatch: false })
+    ], AuthEffects.prototype, "authLogout");
     AuthEffects = __decorate([
         core_1.Injectable()
     ], AuthEffects);

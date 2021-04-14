@@ -2,9 +2,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, throwError } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+//import { catchError, tap } from 'rxjs/operators';
 import { User } from './user.model';
-import { environment } from '../../environments/environment';
+//import { environment } from '../../environments/environment';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../store/app.reducer';
 import * as AuthActions from './store/auth.actions';
@@ -27,44 +27,6 @@ export class AuthService {
     private router: Router,
     private store: Store<fromApp.AppState>
   ) {}
-  signup(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-          environment.firebaseApiKey,
-        { email: email, password: password, returnSecureToken: true }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap((resData) => {
-          this.handleAuthentication(
-            resData.email,
-            resData.localId,
-            resData.idToken,
-            +resData.expiresIn
-          );
-        })
-      );
-  }
-  login(email: string, password: string) {
-    return this.http
-      .post<AuthResponseData>(
-        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key= ' +
-          environment.firebaseApiKey,
-        { email: email, password: password, returnSecureToken: true }
-      )
-      .pipe(
-        catchError(this.handleError),
-        tap((resData) => {
-          this.handleAuthentication(
-            resData.email,
-            resData.localId,
-            resData.idToken,
-            +resData.expiresIn
-          );
-        })
-      );
-  }
 
   autoLogin() {
     const userData: {
@@ -101,9 +63,9 @@ export class AuthService {
 
   logout() {
     //this.user.next(null);
-    this.store.dispatch(new AuthActions.Logout());
-    this.router.navigate(['/auth']);
-    localStorage.removeItem('userData');
+    //this.store.dispatch(new AuthActions.Logout());
+    //this.router.navigate(['/auth']);
+    // localStorage.removeItem('userData');
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
@@ -156,3 +118,42 @@ export class AuthService {
     return throwError(errorMessage);
   }
 }
+
+// signup(email: string, password: string) {
+//   return this.http
+//     .post<AuthResponseData>(
+//       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
+//         environment.firebaseApiKey,
+//       { email: email, password: password, returnSecureToken: true }
+//     )
+//     .pipe(
+//       catchError(this.handleError),
+//       tap((resData) => {
+//         this.handleAuthentication(
+//           resData.email,
+//           resData.localId,
+//           resData.idToken,
+//           +resData.expiresIn
+//         );
+//       })
+//     );
+// }
+// login(email: string, password: string) {
+//   return this.http
+//     .post<AuthResponseData>(
+//       'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key= ' +
+//         environment.firebaseApiKey,
+//       { email: email, password: password, returnSecureToken: true }
+//     )
+//     .pipe(
+//       catchError(this.handleError),
+//       tap((resData) => {
+//         this.handleAuthentication(
+//           resData.email,
+//           resData.localId,
+//           resData.idToken,
+//           +resData.expiresIn
+//         );
+//       })
+//     );
+// }

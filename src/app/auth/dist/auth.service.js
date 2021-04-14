@@ -9,9 +9,8 @@ exports.__esModule = true;
 exports.AuthService = void 0;
 var core_1 = require("@angular/core");
 var rxjs_1 = require("rxjs");
-var operators_1 = require("rxjs/operators");
+//import { catchError, tap } from 'rxjs/operators';
 var user_model_1 = require("./user.model");
-var environment_1 = require("../../environments/environment");
 var AuthActions = require("./store/auth.actions");
 var AuthService = /** @class */ (function () {
     function AuthService(http, router, store) {
@@ -19,24 +18,6 @@ var AuthService = /** @class */ (function () {
         this.router = router;
         this.store = store;
     }
-    AuthService.prototype.signup = function (email, password) {
-        var _this = this;
-        return this.http
-            .post('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
-            environment_1.environment.firebaseApiKey, { email: email, password: password, returnSecureToken: true })
-            .pipe(operators_1.catchError(this.handleError), operators_1.tap(function (resData) {
-            _this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
-        }));
-    };
-    AuthService.prototype.login = function (email, password) {
-        var _this = this;
-        return this.http
-            .post('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key= ' +
-            environment_1.environment.firebaseApiKey, { email: email, password: password, returnSecureToken: true })
-            .pipe(operators_1.catchError(this.handleError), operators_1.tap(function (resData) {
-            _this.handleAuthentication(resData.email, resData.localId, resData.idToken, +resData.expiresIn);
-        }));
-    };
     AuthService.prototype.autoLogin = function () {
         var userData = JSON.parse(localStorage.getItem('userData'));
         if (!userData) {
@@ -58,9 +39,9 @@ var AuthService = /** @class */ (function () {
     };
     AuthService.prototype.logout = function () {
         //this.user.next(null);
-        this.store.dispatch(new AuthActions.Logout());
-        this.router.navigate(['/auth']);
-        localStorage.removeItem('userData');
+        //this.store.dispatch(new AuthActions.Logout());
+        //this.router.navigate(['/auth']);
+        // localStorage.removeItem('userData');
         if (this.tokenExpirationTimer) {
             clearTimeout(this.tokenExpirationTimer);
         }
@@ -109,3 +90,41 @@ var AuthService = /** @class */ (function () {
     return AuthService;
 }());
 exports.AuthService = AuthService;
+// signup(email: string, password: string) {
+//   return this.http
+//     .post<AuthResponseData>(
+//       'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' +
+//         environment.firebaseApiKey,
+//       { email: email, password: password, returnSecureToken: true }
+//     )
+//     .pipe(
+//       catchError(this.handleError),
+//       tap((resData) => {
+//         this.handleAuthentication(
+//           resData.email,
+//           resData.localId,
+//           resData.idToken,
+//           +resData.expiresIn
+//         );
+//       })
+//     );
+// }
+// login(email: string, password: string) {
+//   return this.http
+//     .post<AuthResponseData>(
+//       'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key= ' +
+//         environment.firebaseApiKey,
+//       { email: email, password: password, returnSecureToken: true }
+//     )
+//     .pipe(
+//       catchError(this.handleError),
+//       tap((resData) => {
+//         this.handleAuthentication(
+//           resData.email,
+//           resData.localId,
+//           resData.idToken,
+//           +resData.expiresIn
+//         );
+//       })
+//     );
+// }

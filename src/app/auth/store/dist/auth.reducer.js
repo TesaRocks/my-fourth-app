@@ -28,6 +28,7 @@ function authReducer(state, action) {
         case AuthActions.LOGOUT:
             return __assign(__assign({}, state), { user: null });
         case AuthActions.LOGIN_START:
+        case AuthActions.SIGNUP_START:
             return __assign(__assign({}, state), { authError: null, loading: true });
         case AuthActions.AUTHENTICATE_FAIL:
             return __assign(__assign({}, state), { user: null, authError: action.payload, loading: false });

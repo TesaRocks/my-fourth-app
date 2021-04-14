@@ -20,7 +20,7 @@ var AuthComponent = /** @class */ (function () {
     }
     AuthComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.store.select('auth').subscribe(function (authState) {
+        this.storeSub = this.store.select('auth').subscribe(function (authState) {
             _this.isLoading = authState.loading;
             _this.error = authState.authError;
         });
@@ -52,6 +52,9 @@ var AuthComponent = /** @class */ (function () {
         //   }
         // );
         form.reset();
+    };
+    AuthComponent.prototype.ngOnDestroy = function () {
+        this.storeSub.unsubscribe();
     };
     AuthComponent = __decorate([
         core_1.Component({
