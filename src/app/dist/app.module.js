@@ -23,6 +23,7 @@ var store_devtools_1 = require("@ngrx/store-devtools");
 var environment_1 = require("../environments/environment");
 var router_store_1 = require("@ngrx/router-store");
 var recipe_effects_1 = require("./recipes/store/recipe.effects");
+var animations_1 = require("@angular/platform-browser/animations");
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -30,7 +31,7 @@ var AppModule = /** @class */ (function () {
         core_1.NgModule({
             declarations: [app_component_1.AppComponent, header_component_1.HeaderComponent],
             imports: [
-                platform_browser_1.BrowserModule,
+                platform_browser_1.BrowserModule.withServerTransition({ appId: 'serverApp' }),
                 app_routing_module_1.AppRoutingModule,
                 http_1.HttpClientModule,
                 store_1.StoreModule.forRoot(fromApp.appReducer),
@@ -39,6 +40,7 @@ var AppModule = /** @class */ (function () {
                 core_module_1.CoreModule,
                 store_devtools_1.StoreDevtoolsModule.instrument({ logOnly: environment_1.environment.production }),
                 router_store_1.StoreRouterConnectingModule.forRoot(),
+                animations_1.BrowserAnimationsModule,
             ],
             bootstrap: [app_component_1.AppComponent]
         })

@@ -5,25 +5,33 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 exports.__esModule = true;
 exports.AppComponent = void 0;
 var core_1 = require("@angular/core");
+var common_1 = require("@angular/common");
 var AuthActions = require("./auth/store/auth.actions");
 var AppComponent = /** @class */ (function () {
-    function AppComponent(authService, store) {
+    function AppComponent(authService, store, platformId) {
         this.authService = authService;
         this.store = store;
+        this.platformId = platformId;
     }
     AppComponent.prototype.ngOnInit = function () {
         // this.authService.autoLogin();
-        this.store.dispatch(new AuthActions.AutoLogin());
+        if (common_1.isPlatformBrowser(this.platformId)) {
+            this.store.dispatch(new AuthActions.AutoLogin());
+        }
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'app-root',
             templateUrl: './app.component.html',
             styleUrls: ['./app.component.css']
-        })
+        }),
+        __param(2, core_1.Inject(core_1.PLATFORM_ID))
     ], AppComponent);
     return AppComponent;
 }());
