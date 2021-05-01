@@ -13,4 +13,5 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - HTTP REQUESTS
 - AUTHENTICATION AND AUTH GUARDS
 - ANGULAR MODULES
-- NGRX 
+- NGRX
+- AND MUCH FUN!!!
